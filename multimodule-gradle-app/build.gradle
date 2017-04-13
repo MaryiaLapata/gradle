@@ -1,0 +1,36 @@
+buildscript {
+		repositories {
+	       mavenCentral()
+	    }
+	}
+
+subprojects {
+
+	repositories {
+	       mavenCentral()
+	    }
+
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+   	
+    
+    group = 'com.epam.cdp.userManagement'
+    version = '1.0'
+
+    
+
+    dependencies {
+        testCompile 'junit:junit:4.8.2'
+        compile("ch.qos.logback:logback-parent:1.1.7")
+	   
+		
+    }
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+}
+
+//jar {
+  //      baseName = 'web-service'
+	//	version =  '0.1.0'
+    //}

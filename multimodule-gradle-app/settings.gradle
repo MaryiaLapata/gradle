@@ -1,0 +1,2 @@
+rootProject.name = "mainProject"
+include "user-management-api", "user-management-impl"

@@ -1,0 +1,2 @@
+plugins { id "io.spring.dependency-management" version "1.0.0.RELEASE" }
+
