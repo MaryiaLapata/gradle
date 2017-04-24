@@ -1,9 +1,9 @@
 
 INSERT INTO "address" VALUES (1,'Minsk','Novaya',1,1),(2,'Minsk','Staraya',10,115),(3,'Minsk','Street1',111,10),(4,'Minsk','Street1',111,10),(5,'Minsk','Street1',111,10),(6,'Minsk','Street1',111,10),(7,'Minsk','Street1',111,10);
 
+INSERT INTO "license" VALUES (1, ''),(2, ''),(3, ''),(4, ''),(5, ''),(6, ''),(7, ''),(8, '');
 
-
-INSERT INTO "group" VALUES (1,'Group1'),(2,'Group2');
+INSERT INTO "group" VALUES (6),(7);
 
 
 INSERT INTO "permission" VALUES (1,'Permission1','000'),(2,'Permission2','111');

@@ -3,8 +3,7 @@ package com.epam.cdp.userManagement.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
-@Component
-@ConfigurationProperties("app")
+//@ConfigurationProperties("app")
 public class ApplicationProperties {
 	
 	private String main;
@@ -29,7 +28,6 @@ public class ApplicationProperties {
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "ApplicationProperties: main: " + main + ", error: " + error;
 	}
 }

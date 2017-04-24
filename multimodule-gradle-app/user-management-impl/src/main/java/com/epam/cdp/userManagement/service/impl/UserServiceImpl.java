@@ -3,17 +3,19 @@ package com.epam.cdp.userManagement.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.epam.cdp.userManagement.dao.EntityRepository;
-import com.epam.cdp.userManagement.dao.UserRepository;
+import com.epam.cdp.userManagement.dao.LicenseRepository;
 import com.epam.cdp.userManagement.model.Address;
 import com.epam.cdp.userManagement.model.User;
 import com.epam.cdp.userManagement.service.IUserService;
 
-
+@Component
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private LicenseRepository<User> userRepository;
 	
 	@Autowired
 	private EntityRepository<Address> addressRepository;

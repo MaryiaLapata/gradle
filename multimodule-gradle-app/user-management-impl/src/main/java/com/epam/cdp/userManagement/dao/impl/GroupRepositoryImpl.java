@@ -14,15 +14,16 @@ import org.springframework.stereotype.Repository;
 import com.epam.cdp.userManagement.dao.GroupRepository;
 import com.epam.cdp.userManagement.dao.helper.GroupRowMapper;
 import com.epam.cdp.userManagement.model.Group;
+import com.epam.cdp.userManagement.model.License;
 
 @Repository
 public class GroupRepositoryImpl implements GroupRepository {
 
-	private String SQL_SELECT = "SELECT * FROM group WHERE group_id=?";
-	private String SQL_SELECT_ALL = "SELECT * FROM group";
-	private String SQL_DELETE = "DELETE FROM group WHERE group_id=?";
-	private String SQL_UPDATE = "update group set name=? WHERE group_id=?";
-	private String SQL_INSERT = "INSERT INTO group(name) VALUES (:name)";
+	private String SQL_SELECT = "SELECT * FROM `group` INNER JOIN license ON `group`.group_id=license.license_id WHERE `group`.group_id=?";
+	private String SQL_SELECT_ALL = "SELECT * FROM `group` INNER JOIN license ON `group`.group_id=license.license_id";
+	private String SQL_DELETE = "DELETE FROM `group` WHERE group_id=?";
+	private String SQL_UPDATE = "update `group` set name=? WHERE group_id=?";
+	private String SQL_INSERT = "INSERT INTO `group`(group_id) VALUES (LAST_INSERT_ID())";
 	private String SQL_ADD_USER = "INSERT INTO user_group(user_id, group_id) VALUES (?,?)";
 	private String SQL_ADD_PERMISSION = "INSERT INTO group_permission(group_id, permission_id) VALUES (?,?)";
 	
@@ -34,8 +35,10 @@ public class GroupRepositoryImpl implements GroupRepository {
 	@Override
 	public long create(Group entity) {
 		SqlParameterSource fileParameters = new BeanPropertySqlParameterSource(entity);
+		License licenseObj = new License(entity.getName());
 	    KeyHolder keyHolder = new GeneratedKeyHolder();
-	    namedParameterJdbcTemplate.update(SQL_INSERT, fileParameters, keyHolder);
+	    namedParameterJdbcTemplate.update(SQL_LICENSE_INSERT, new BeanPropertySqlParameterSource(licenseObj), keyHolder);
+	    namedParameterJdbcTemplate.update(SQL_INSERT, fileParameters);
 	    return keyHolder.getKey().intValue();
 	}
 
@@ -75,8 +78,8 @@ public class GroupRepositoryImpl implements GroupRepository {
 	}
 
 	@Override
-	public void assignPermissions(long groupId, List<Long> permissionIds) {
-		for(Long id : permissionIds) {
+	public void assignPermissions(long groupId, long[] permissionIds) {
+		for(long id : permissionIds) {
 			jdbcTemplate.update(
 					SQL_ADD_PERMISSION,
 					groupId, id);

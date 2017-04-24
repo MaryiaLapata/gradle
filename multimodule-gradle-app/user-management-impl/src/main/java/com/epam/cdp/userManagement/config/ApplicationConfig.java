@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import com.epam.cdp.userManagement.service.IUserService;
 import com.epam.cdp.userManagement.service.impl.UserServiceImpl;
 
-@Configuration
+//@Configuration
 public class ApplicationConfig {
 	
-	@Bean
+	//@Bean
 	public IUserService getBean() {
 		return new UserServiceImpl();
 	}

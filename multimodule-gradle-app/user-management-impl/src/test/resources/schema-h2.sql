@@ -12,14 +12,22 @@ CREATE TABLE "address" (
   PRIMARY KEY ("address_id")
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS "license";
+CREATE TABLE "license" (
+  "license_id" int(11) NOT NULL AUTO_INCREMENT,
+  "name" varchar(45) DEFAULT NULL,
+  PRIMARY KEY ("license_id"),
+  UNIQUE KEY "idlicense_id_UNIQUE" ("license_id")
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+
+
 DROP TABLE IF EXISTS "group";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "group" (
-  "group_id" int(11) NOT NULL AUTO_INCREMENT,
-  "name" varchar(45) NOT NULL,
-  PRIMARY KEY ("group_id")
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  "group_id" int(11) NOT NULL,
+  PRIMARY KEY ("group_id"),
+  CONSTRAINT "group_parent_fk" FOREIGN KEY ("group_id") REFERENCES "license" ("license_id") ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 DROP TABLE IF EXISTS "permission";
@@ -51,7 +59,7 @@ DROP TABLE IF EXISTS "user";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "user" (
-  "user_id" int(11) NOT NULL AUTO_INCREMENT,
+  "user_id" int(11) NOT NULL,
   "first_name" varchar(45) NOT NULL,
   "last_name" varchar(45) NOT NULL,
   "email" varchar(60) DEFAULT NULL,
@@ -59,8 +67,10 @@ CREATE TABLE "user" (
   "phone" varchar(45) DEFAULT NULL,
   PRIMARY KEY ("user_id"),
   KEY "address_id_fk_idx" ("address_id"),
-  CONSTRAINT "address_id_fk" FOREIGN KEY ("address_id") REFERENCES "address" ("address_id") ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+  CONSTRAINT "address_id_fk" FOREIGN KEY ("address_id") REFERENCES "address" ("address_id") ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT "user_parent_fk" FOREIGN KEY ("user_id") REFERENCES "license" ("license_id") ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DROP TABLE IF EXISTS "user_group";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

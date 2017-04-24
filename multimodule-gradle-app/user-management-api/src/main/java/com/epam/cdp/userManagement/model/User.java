@@ -2,20 +2,19 @@ package com.epam.cdp.userManagement.model;
 
 import java.util.List;
 
-public class User {
+public class User extends License {
 	
-	private long id;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String phone;
 	private Address address;
 	private List<Group> groupList;
-	private List<Permission> permissionList;
 	
 	public User(){};
 	
 	public User(String firstName, String lastName, String email, String phone, Address address){
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
@@ -24,6 +23,7 @@ public class User {
 	};	
 	
 	public User(long id, String firstName, String lastName, String email, String phone, Address address){
+		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -32,12 +32,6 @@ public class User {
 		this.address = address;
 	};	
 	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -77,14 +71,4 @@ public class User {
 	public void setGroupList(List<Group> groupList) {
 		this.groupList = groupList;
 	}
-
-	public List<Permission> getPermissionList() {
-		return permissionList;
-	}
-
-	public void setPermissionList(List<Permission> permissionList) {
-		this.permissionList = permissionList;
-	}
-	
-	
 }

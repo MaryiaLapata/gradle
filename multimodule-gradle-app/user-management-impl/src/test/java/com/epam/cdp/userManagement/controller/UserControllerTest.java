@@ -15,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.epam.cdp.userManagement.UserManagementApp;
@@ -24,6 +25,7 @@ import com.epam.cdp.userManagement.model.User;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserManagementApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //@PropertySource("classpath:application-test.yml")
+@ActiveProfiles("test")
 public class UserControllerTest {
 
 	@Autowired
