@@ -24,7 +24,6 @@ import com.epam.cdp.userManagement.model.User;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = UserManagementApp.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-//@PropertySource("classpath:application-test.yml")
 @ActiveProfiles("test")
 public class UserControllerTest {
 

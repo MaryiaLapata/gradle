@@ -1,10 +1,11 @@
 package com.epam.cdp.userManagement.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Group extends License{
 	
-	private List<User> userList;
+	private List<User> userList = new ArrayList<>();
 	
 	public Group() {}
 	

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.epam.cdp.userManagement.dao.GroupRepository;
+import com.epam.cdp.userManagement.exception.NoAffectedRowsDAOException;
+import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.service.IGroupService;
 
@@ -14,6 +16,8 @@ public class GroupServiceImpl implements IGroupService{
 	
 	@Autowired
 	private GroupRepository groupRepository;
+	//@Autowired
+	//private UserRepository userRepo;
 
 	@Override
 	public List<Group> getAll() {
@@ -22,14 +26,40 @@ public class GroupServiceImpl implements IGroupService{
 
 	@Override
 	public Group getById(long groupId) {
-		// TODO Auto-generated method stub
-		return groupRepository.getById(groupId);
+		Group group = groupRepository.getById(groupId);
+		//group.setUserList(userRepo.getUsersByGroupId(groupId));
+		return group;
 	}
 
 	@Override
 	public long create(Group newGroup) {
-		// TODO Auto-generated method stub
 		return groupRepository.create(newGroup);
+	}
+
+	@Override
+	public void delete(long id) throws NoSuchModelException {
+		try {
+			groupRepository.delete(id);
+		} catch (NoAffectedRowsDAOException e) {
+			throw new NoSuchModelException(Group.class, id);
+		}
+	}
+
+	@Override
+	public Group update(long id, Group newGroup) {
+		newGroup.setId(id);
+		
+		if(groupRepository.update(newGroup) > 0) {
+			return groupRepository.getById(id);
+		}
+		
+		return null;
+	}
+
+	@Override
+	public List<Group> getByUserId(long userId) {
+		
+		return groupRepository.getByUserId(userId);
 	}
 
 }

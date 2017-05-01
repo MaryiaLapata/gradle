@@ -1,15 +1,29 @@
 package com.epam.cdp.userManagement.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
 public class User extends License {
-	
+
+	@NotNull
+	@Size(min = 2, max=45)
 	private String firstName;
+	@NotNull
+	@Size(min = 2, max=45)
 	private String lastName;
+	@Email
 	private String email;
 	private String phone;
+	@NotNull
+    @Valid
 	private Address address;
-	private List<Group> groupList;
+	private List<Group> groupList = new ArrayList<>();
 	
 	public User(){};
 	

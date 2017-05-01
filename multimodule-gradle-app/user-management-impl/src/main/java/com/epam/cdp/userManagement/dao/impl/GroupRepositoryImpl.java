@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import com.epam.cdp.userManagement.dao.GroupRepository;
+import com.epam.cdp.userManagement.dao.PermissionRepository;
 import com.epam.cdp.userManagement.dao.helper.GroupRowMapper;
 import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.model.License;
@@ -26,11 +27,16 @@ public class GroupRepositoryImpl implements GroupRepository {
 	private String SQL_INSERT = "INSERT INTO `group`(group_id) VALUES (LAST_INSERT_ID())";
 	private String SQL_ADD_USER = "INSERT INTO user_group(user_id, group_id) VALUES (?,?)";
 	private String SQL_ADD_PERMISSION = "INSERT INTO group_permission(group_id, permission_id) VALUES (?,?)";
+	private String SQL_SELECT_BY_USER = "SELECT * FROM `group` INNER JOIN license ON `group`.group_id=license.license_id WHERE `group`.group_id IN (SELECT user_group.group_id FROM user_group WHERE user_group.user_id=?)";
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Autowired
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+	@Autowired
+	private PermissionRepository permissionRepo;
+//	@Autowired
+//	private UserRepository userRepo;
 	
 	@Override
 	public long create(Group entity) {
@@ -44,8 +50,11 @@ public class GroupRepositoryImpl implements GroupRepository {
 
 	@Override
 	public Group getById(long id) {
-		return jdbcTemplate.queryForObject(SQL_SELECT,
+		Group group =  jdbcTemplate.queryForObject(SQL_SELECT,
                 new GroupRowMapper(), id);
+		group.setPermissionList(permissionRepo.getByGroupId(id));
+		//group.setUserList(userRepo.getUsersByGroupId(id));
+		return group;
 	}
 
 	@Override
@@ -84,6 +93,16 @@ public class GroupRepositoryImpl implements GroupRepository {
 					SQL_ADD_PERMISSION,
 					groupId, id);
 		}
+	}
+
+	@Override
+	public List<Group> getByUserId(long userId) {
+		List<Group> groups =  jdbcTemplate.query(SQL_SELECT_BY_USER,
+                new GroupRowMapper(), userId);
+		for(Group group : groups) {
+			group.setPermissionList(permissionRepo.getByGroupId(group.getId()));
+		}
+		return groups;
 	}
 
 }

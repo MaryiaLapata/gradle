@@ -1,10 +1,22 @@
 package com.epam.cdp.userManagement.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Address {
 	
 	private long id;	
+	@NotNull
+	@Size(min = 2, max=45)
 	private String city;
+	@NotNull
+	@Size(min = 2, max=45)
 	private String street;
+	@NotEmpty
+	@Min(1)
 	private int houseNumber;
 	private int flatNumber;
 	

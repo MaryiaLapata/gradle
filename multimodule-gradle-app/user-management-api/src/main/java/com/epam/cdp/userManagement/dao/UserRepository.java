@@ -4,7 +4,11 @@ import java.util.List;
 
 import com.epam.cdp.userManagement.model.User;
 
-public interface UserRepository extends EntityRepository<User>{
+public interface UserRepository extends LicenseRepository<User>{
+
+	void assignGroup(long userId, long groupId);
 	
-	void assignPermissions(long userId, long[] permissionIds);
+	void assignPermission(long userId, long permissionId);
+	
+	List<User> getUsersByGroupId(long groupId);
 }

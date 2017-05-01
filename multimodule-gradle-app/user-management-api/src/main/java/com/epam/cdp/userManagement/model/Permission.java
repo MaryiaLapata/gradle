@@ -1,10 +1,17 @@
 package com.epam.cdp.userManagement.model;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Permission {
 
 	private long id;
+	@NotEmpty
 	private String object;
-	private byte actionType;
+	@NotEmpty
+	@Pattern(regexp = "[0-1]{3}")
+	private String actionType;
 	
 	public long getId() {
 		return id;
@@ -18,10 +25,11 @@ public class Permission {
 	public void setObject(String object) {
 		this.object = object;
 	}
-	public byte getActionType() {
+	public String getActionType() {
 		return actionType;
 	}
-	public void setActionType(byte actionType) {
+	public void setActionType(String actionType) {
 		this.actionType = actionType;
-	}	
+	}
+	
 }
