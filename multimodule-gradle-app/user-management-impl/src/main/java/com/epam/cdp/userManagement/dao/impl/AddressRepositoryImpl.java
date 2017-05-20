@@ -2,78 +2,71 @@ package com.epam.cdp.userManagement.dao.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
-import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+
 import org.springframework.stereotype.Repository;
 
 import com.epam.cdp.userManagement.dao.AddressRepository;
-import com.epam.cdp.userManagement.dao.helper.AddressRowMapper;
 import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Address;
 
 @Repository
 public class AddressRepositoryImpl implements AddressRepository {
-	
-	private String SQL_INSERT = "INSERT INTO address(city, street, house_number, flat_number) VALUES (:city, :street, :houseNumber, :flatNumber)";
-	private String SQL_SELECT = "SELECT * FROM address WHERE address_id=?";
-	private String SQL_SELECT_ALL = "SELECT * FROM address";
-	private String SQL_DELETE = "DELETE FROM address WHERE address_id=?";
-	private String SQL_UPDATE = "update address set city=?, street=?, house_number=?, flat_number=? WHERE address_id=?";
-	private String SQL_SELECT_ID_BY_ADDRESS = "SELECT address_id FROM cdp_users.address WHERE city=? AND street=? AND house_number=? AND flat_number=?";
-	
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
-	@Autowired
-	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-	
+
+	private String HQL_SELECT = "SELECT address FROM Address address";
+	private String HQL_SELECT_ID_BY_ADDRESS = "SELECT address.id FROM Address address WHERE address.city=:city AND address.street=:street AND address.house_number=:houseNumber AND address.flat_number=:flatNumber";
+
+	@PersistenceContext
+	private EntityManager entityManager;
+
 	@Override
 	public long create(Address entity) {
-		SqlParameterSource fileParameters = new BeanPropertySqlParameterSource(entity);
-	    KeyHolder keyHolder = new GeneratedKeyHolder();
-	    namedParameterJdbcTemplate.update(SQL_INSERT, fileParameters, keyHolder);
-	    return keyHolder.getKey().intValue();
+		entity.setId(0);
+		entityManager.persist(entity);
+		entityManager.flush();
+		return entity.getId();
 	}
 
 	@Override
 	public Address getById(long id) {
-		return jdbcTemplate.queryForObject(SQL_SELECT,
-                new AddressRowMapper(), id);
+		return entityManager.find(Address.class, id);
 	}
 
 	@Override
-	public int update(Address entity) {
-		return jdbcTemplate.update(
-				SQL_UPDATE,
-				entity.getCity(), entity.getStreet(), entity.getHouseNumber(), entity.getFlatNumber(), entity.getId());
+	public Address update(Address entity) {
+		Address address = getById(entity.getId());
+		if (address == null) {
+			return null;
+		}
+		return entityManager.merge(entity);
 	}
 
 	@Override
-	public void delete(long id) {
-		jdbcTemplate.update(
-				SQL_DELETE,
-				id);
+	public void delete(long id) throws NoSuchModelException {
+		Address address = getById(id);
+		if (address == null) {
+			throw new NoSuchModelException(Address.class, id);
+		}
+		entityManager.remove(address);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Address> getAll() {
-		return jdbcTemplate.query(SQL_SELECT_ALL,
-                new AddressRowMapper());
+		return (List<Address>) entityManager.createQuery(HQL_SELECT).getResultList();
 	}
 
 	@Override
 	public long getIdByAddress(Address address) throws NoSuchModelException {
-		long addressId = (long)jdbcTemplate.queryForObject(
-				SQL_SELECT_ID_BY_ADDRESS, new Object[] { address.getCity(), address.getStreet(), address.getHouseNumber(), address.getHouseNumber() }, Long.class);
-		if (addressId == 0) {
-			throw new NoSuchModelException();
-		}
-
-		return addressId;
+		Query query = entityManager.createQuery(HQL_SELECT_ID_BY_ADDRESS);
+		query.setParameter("city", address.getCity());
+		query.setParameter("street", address.getStreet());
+		query.setParameter("houseNumber", address.getHouseNumber());
+		query.setParameter("flatNumber", address.getFlatNumber());
+		return (long) query.getSingleResult();
 	}
 
 }

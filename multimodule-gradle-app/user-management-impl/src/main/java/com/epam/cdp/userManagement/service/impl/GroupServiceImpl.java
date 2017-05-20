@@ -48,12 +48,7 @@ public class GroupServiceImpl implements IGroupService{
 	@Override
 	public Group update(long id, Group newGroup) {
 		newGroup.setId(id);
-		
-		if(groupRepository.update(newGroup) > 0) {
-			return groupRepository.getById(id);
-		}
-		
-		return null;
+		return groupRepository.update(newGroup);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.epam.cdp.userManagement.dao.EntityRepository;
 import com.epam.cdp.userManagement.dao.UserRepository;
@@ -14,6 +15,7 @@ import com.epam.cdp.userManagement.model.User;
 import com.epam.cdp.userManagement.service.IUserService;
 
 @Component
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements IUserService {
 
 	@Autowired
@@ -49,11 +51,7 @@ public class UserServiceImpl implements IUserService {
 	public User update(long id, User user) {
 		user.setId(id);
 		
-		if(userRepository.update(user) > 0) {
-			return userRepository.getById(id);
-		}
-		
-		return null;
+		return userRepository.update(user);
 	}
 
 	@Override

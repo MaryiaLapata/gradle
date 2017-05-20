@@ -1,17 +1,39 @@
 package com.epam.cdp.userManagement.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class Permission {
+@Entity
+@Table
+public class Permission implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@Column(name="permission_id")
+	@GeneratedValue
 	private long id;
 	@NotEmpty
+	@Column
 	private String object;
 	@NotEmpty
 	@Pattern(regexp = "[0-1]{3}")
+	@Column
 	private String actionType;
+	
+	//@ManyToMany(mappedBy="permissionList")
+	//private List<User> userList = new ArrayList<>();
 	
 	public long getId() {
 		return id;

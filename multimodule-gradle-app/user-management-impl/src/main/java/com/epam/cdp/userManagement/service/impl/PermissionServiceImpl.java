@@ -44,12 +44,7 @@ public class PermissionServiceImpl implements IPermissionService{
 	@Override
 	public Permission update(long id, Permission permission) {
 		permission.setId(id);
-		
-		if(permissionRepo.update(permission) > 0) {
-			return permissionRepo.getById(id);
-		}
-		
-		return null;
+		return permissionRepo.update(permission);
 	}
 
 	@Override
