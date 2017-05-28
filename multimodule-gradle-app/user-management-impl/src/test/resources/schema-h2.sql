@@ -21,8 +21,8 @@ CREATE TABLE "license" (
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 
-DROP TABLE IF EXISTS "group";
-CREATE TABLE "group" (
+DROP TABLE IF EXISTS "groupp";
+CREATE TABLE "groupp" (
   "group_id" int(11) NOT NULL,
   PRIMARY KEY ("group_id"),
   CONSTRAINT "group_parent_fk" FOREIGN KEY ("group_id") REFERENCES "license" ("license_id") ON DELETE CASCADE ON UPDATE CASCADE
@@ -40,19 +40,18 @@ CREATE TABLE "permission" (
   PRIMARY KEY ("permission_id")
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS "group_permission";
+DROP TABLE IF EXISTS "lisence_permission";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "group_permission" (
-  "group_permission_id" int(11) NOT NULL AUTO_INCREMENT,
-  "group_id" int(11) NOT NULL,
+CREATE TABLE "lisence_permission" (
+  "lisence_id" int(11) NOT NULL,
   "permission_id" int(11) NOT NULL,
-  PRIMARY KEY ("group_permission_id"),
   KEY "permission_id_fk_idx" ("permission_id"),
-  KEY "group_idfk" ("group_id"),
-  CONSTRAINT "group_idfk" FOREIGN KEY ("group_id") REFERENCES "group" ("group_id") ON DELETE CASCADE ON UPDATE NO ACTION,
+  KEY "group_idfk_idx" ("lisence_id"),
+  CONSTRAINT "lisence_idfk" FOREIGN KEY ("lisence_id") REFERENCES "license" ("license_id") ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT "permission_idfk" FOREIGN KEY ("permission_id") REFERENCES "permission" ("permission_id") ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 
 DROP TABLE IF EXISTS "user";
@@ -76,27 +75,13 @@ DROP TABLE IF EXISTS "user_group";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "user_group" (
-  "user_group_id" int(11) NOT NULL AUTO_INCREMENT,
   "user_id" int(11) NOT NULL,
   "group_id" int(11) NOT NULL,
-  PRIMARY KEY ("user_group_id"),
-  KEY "user_id_idx" ("user_id"),
+  PRIMARY KEY ("user_id","group_id"),
   KEY "group_id_fk_idx" ("group_id"),
-  CONSTRAINT "group_id_fk" FOREIGN KEY ("group_id") REFERENCES "group" ("group_id") ON DELETE CASCADE ON UPDATE NO ACTION,
+  KEY "license_id_fk_idx" ("user_id"),
+  CONSTRAINT "group_id_fk" FOREIGN KEY ("group_id") REFERENCES "groupp" ("group_id") ON DELETE CASCADE ON UPDATE NO ACTION,
   CONSTRAINT "user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user" ("user_id") ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-DROP TABLE IF EXISTS "user_permission";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "user_permission" (
-  "iduser_permission" int(11) NOT NULL AUTO_INCREMENT,
-  "user_id" int(11) NOT NULL,
-  "permission_id" int(11) NOT NULL,
-  PRIMARY KEY ("iduser_permission"),
-  KEY "userid_fk_idx" ("user_id"),
-  KEY "permission_user_id_fk_idx" ("permission_id"),
-  CONSTRAINT "permission_id_fk" FOREIGN KEY ("permission_id") REFERENCES "permission" ("permission_id") ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT "userid_fk" FOREIGN KEY ("user_id") REFERENCES "user" ("user_id") ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;

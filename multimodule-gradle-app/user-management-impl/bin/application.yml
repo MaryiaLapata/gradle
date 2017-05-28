@@ -1,36 +1,20 @@
 server:
-    port: 9000
+    port: 91111
 spring:
+  profiles: test
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cdp_users?autoReconnect=true&useSSL=false
-    username: root
-    password: 1234
-    initialize: false
+    url: jdbc:h2:mem:cdp_users;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=false;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+    platform: h2
+    initialize: true
   jpa:
+    hibernate:
+      ddl-auto: none
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.H2Dialect
     show-sql: true
   application:
-    name: userManagement
-
-endpoints:
-  health:
-    sensitive: false
-management:
-  port: 3000
-  
-app:
-  main: /users/
-  error: /error/
----
-spring:
-    profiles: development
-server:
-    port: 8181
----
-server:
-    port: 8282
-spring:
-    profiles: production
+    name: userManagementTest

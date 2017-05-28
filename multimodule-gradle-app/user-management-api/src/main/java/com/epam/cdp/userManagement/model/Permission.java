@@ -35,6 +35,14 @@ public class Permission implements Serializable {
 	//@ManyToMany(mappedBy="permissionList")
 	//private List<User> userList = new ArrayList<>();
 	
+	public Permission(){}
+	
+	public Permission(long id, String object, String actionType) {
+		this.id = id;
+		this.object = object;
+		this.actionType = actionType;
+	}
+	
 	public long getId() {
 		return id;
 	}

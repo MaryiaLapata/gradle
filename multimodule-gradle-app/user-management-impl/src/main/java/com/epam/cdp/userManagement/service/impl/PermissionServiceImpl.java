@@ -34,11 +34,7 @@ public class PermissionServiceImpl implements IPermissionService{
 
 	@Override
 	public void delete(long permissionId) throws NoSuchModelException {
-		try {
-			permissionRepo.delete(permissionId);
-		} catch (NoAffectedRowsDAOException e) {
-			throw new NoSuchModelException(Permission.class, e.getEntityId());
-		}
+		permissionRepo.delete(permissionId);
 	}
 
 	@Override

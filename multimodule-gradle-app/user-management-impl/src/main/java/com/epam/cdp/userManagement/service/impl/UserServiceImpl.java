@@ -56,12 +56,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public void delete(long id) throws NoSuchModelException {
-		try {
-			userRepository.delete(id);
-		} catch (NoAffectedRowsDAOException e) {
-			throw new NoSuchModelException(User.class, e.getEntityId());
-		}
-		
+		userRepository.delete(id);		
 	}
 
 	@Override

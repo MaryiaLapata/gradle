@@ -23,7 +23,7 @@ import com.epam.cdp.userManagement.model.User;
 public class UserRepositoryImpl implements UserRepository {
 
 	private String HQL_SELECT = "SELECT user FROM User user";
-	private String HQL_SELECT_BY_GROUP = "SELECT user FROM User user JOIN user.groupList group WHERE group.id = :groupId";
+	private String HQL_SELECT_BY_GROUP = "SELECT user FROM Group groupp INNER JOIN groupp.userList user WHERE groupp.id = :groupId";
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void delete(long id) throws NoAffectedRowsDAOException, NoSuchModelException {
+	public void delete(long id) throws NoSuchModelException {
 		User user = getById(id);
 		if(user == null) {
 			throw new NoSuchModelException(User.class, id);

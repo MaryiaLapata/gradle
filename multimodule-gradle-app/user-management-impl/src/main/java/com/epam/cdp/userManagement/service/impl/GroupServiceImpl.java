@@ -38,11 +38,7 @@ public class GroupServiceImpl implements IGroupService{
 
 	@Override
 	public void delete(long id) throws NoSuchModelException {
-		try {
-			groupRepository.delete(id);
-		} catch (NoAffectedRowsDAOException e) {
-			throw new NoSuchModelException(Group.class, id);
-		}
+		groupRepository.delete(id);
 	}
 
 	@Override
