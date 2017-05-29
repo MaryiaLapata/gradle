@@ -40,10 +40,10 @@ public class UserControllerTest {
 		HttpEntity<String> entity = new HttpEntity<String>(null, headers);
 
 		ResponseEntity<String> response = restTemplate.exchange(
-				createURLWithPort("/users/1"),
+				createURLWithPort("/users/2"),
 				HttpMethod.GET, entity, String.class);
 
-		String expected = "{id:1,firstName:Martin,lastName:Michael,email:Martin.Machael@kronos.com,phone:null,address:{id:2,city:Minsk,street:Staraya,houseNumber:10,flatNumber:115},groupList:null,permissionList:null}";
+		String expected = "{id:2,name:null,permissionList:[{id:1,object:Permission1,actionType:'000'},{id:2,object:Permission2,actionType:'111'}],firstName:Holly,lastName:Ivan,email:Holly.Ivan@kronos.com,phone:'32165478',address:{id:1,city:Minsk,street:Novaya,houseNumber:1,flatNumber:1},groupList:[]}";
 
 		JSONAssert.assertEquals(expected, response.getBody(), false);
 	}
@@ -74,7 +74,7 @@ public class UserControllerTest {
 		restTemplate.exchange(createURLWithPort("/users/1"), HttpMethod.DELETE, entity, String.class);
 		String newresponse = restTemplate.getForObject(createURLWithPort("/users/1"),
                 String.class);
-		assertTrue(newresponse.contains("org.springframework.dao.EmptyResultDataAccessException"));
+		assertTrue(newresponse.contains("There is no the User entity with id=1"));
 	}
 	
 	private String createURLWithPort(String uri) {
