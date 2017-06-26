@@ -9,15 +9,15 @@ public interface IUserService {
 
 	List<User> getAll();
 	
-	User getById(long userId) throws NoSuchModelException;
+	User getById(String userId) throws NoSuchModelException;
 	
-	long create(User newUser);
+	String create(User newUser);
 	
-	User update(long id, User newUser);
+	User update(String id, User newUser);
 	
-	void delete(long id) throws NoSuchModelException;
+	void delete(String id) throws NoSuchModelException;
 	
-	void assignGroup(long userId, long groupId);
+	void assignGroup(String userId, String groupId);
 	
-	void assignPermission(long userId, long permissionId);
+	void assignPermission(String userId, String permissionId);
 }

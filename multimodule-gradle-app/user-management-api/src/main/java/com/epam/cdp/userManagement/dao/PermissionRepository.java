@@ -6,7 +6,7 @@ import com.epam.cdp.userManagement.model.Permission;
 
 public interface PermissionRepository extends EntityRepository<Permission>{
 
-	List<Permission> getByUserId(long userId);
+	List<Permission> getByUserId(String userId);
 	
-	List<Permission> getByGroupId(long groupId);
+	List<Permission> getByGroupId(String groupId);
 }

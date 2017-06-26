@@ -14,7 +14,7 @@ import com.epam.cdp.userManagement.model.Address;
 import com.epam.cdp.userManagement.model.User;
 import com.epam.cdp.userManagement.service.IUserService;
 
-@Component
+//@Component
 @Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl implements IUserService {
 
@@ -30,7 +30,7 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public User getById(long userId) throws NoSuchModelException {
+	public User getById(String userId) throws NoSuchModelException {
 		User user = userRepository.getById(userId);
 		
 		if (user == null) {
@@ -41,31 +41,31 @@ public class UserServiceImpl implements IUserService {
 	}
 
 	@Override
-	public long create(User newUser) {	
-		long addressId = addressRepository.create(newUser.getAddress());
+	public String create(User newUser) {	
+		String addressId = addressRepository.create(newUser.getAddress());
 		newUser.getAddress().setId(addressId);
 		return userRepository.create(newUser);
 	}
 
 	@Override
-	public User update(long id, User user) {
+	public User update(String id, User user) {
 		user.setId(id);
 		
 		return userRepository.update(user);
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
+	public void delete(String id) throws NoSuchModelException {
 		userRepository.delete(id);		
 	}
 
 	@Override
-	public void assignGroup(long userId, long groupId) {
+	public void assignGroup(String userId, String groupId) {
 		userRepository.assignGroup(userId, groupId);
 	}
 
 	@Override
-	public void assignPermission(long userId, long permissionId) {
+	public void assignPermission(String userId, String permissionId) {
 		userRepository.assignPermission(userId, permissionId);
 	}
 }

@@ -5,39 +5,43 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+//@Entity
+//@Table
+@Document
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 4986561174950596745L;
 	@Id
-	@Column(name = "address_id")
+	//@Column(name = "address_id")
 	@GeneratedValue
-	private long id;
+	private String id;
 	@NotNull
 	@Size(min = 2, max = 45)
-	@Column
+	//@Column
 	private String city;
 	@NotNull
 	@Size(min = 2, max = 45)
-	@Column
+	//@Column
 	private String street;
 	@Min(1)
-	@Column
+	//@Column
 	private int houseNumber;
-	@Column
+	//@Column
 	private int flatNumber;
 
 	public Address() {
 	}
 
-	public Address(long id) {
+	public Address(String id) {
 		this.id = id;
 	}
 
@@ -48,7 +52,7 @@ public class Address implements Serializable {
 		this.flatNumber = flatNumber;
 	}
 
-	public Address(long id, String city, String street, int houseNumber, int flatNumber) {
+	public Address(String id, String city, String street, int houseNumber, int flatNumber) {
 		this.id = id;
 		this.city = city;
 		this.street = street;
@@ -56,12 +60,12 @@ public class Address implements Serializable {
 		this.flatNumber = flatNumber;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setId(String i) {
+		this.id = i;
 	}
 
 	public String getCity() {
@@ -96,4 +100,9 @@ public class Address implements Serializable {
 		this.flatNumber = flatNumber;
 	}
 
+	@Override
+	public String toString() {
+		return "Address [id=" + id + ", city=" + city + ", street=" + street + ", houseNumber=" + houseNumber
+				+ ", flatNumber=" + flatNumber + "]";
+	}
 }

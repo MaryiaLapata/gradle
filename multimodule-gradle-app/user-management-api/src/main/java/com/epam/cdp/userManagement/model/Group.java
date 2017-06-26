@@ -14,12 +14,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
-@Entity
-@Table(name = "groupp")
-@PrimaryKeyJoinColumn(name = "group_id")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id", scope = Group.class)
+//@Entity
+//@Table(name = "groupp")
+//@PrimaryKeyJoinColumn(name = "group_id")
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id", scope = Group.class)
 public class Group extends License implements Serializable {
 	
 	private static final long serialVersionUID = -371208780919552318L;

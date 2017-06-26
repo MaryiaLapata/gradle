@@ -12,7 +12,7 @@ import com.epam.cdp.userManagement.dao.PermissionRepository;
 import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Permission;
 
-@Repository
+//@Repository
 public class PermissionRepositoryImpl implements PermissionRepository {
 	
 	private String HQL_SELECT_ALL = "SELECT permission FROM Permission permission";
@@ -23,15 +23,15 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 	private EntityManager entityManager;
 	
 	@Override
-	public long create(Permission entity) {
-		entity.setId(0);
+	public String create(Permission entity) {
+		entity.setId("0");
 		entityManager.persist(entity);
 		entityManager.flush();
 		return entity.getId();
 	}
 
 	@Override
-	public Permission getById(long id) {
+	public Permission getById(String id) {
 		return entityManager.find(Permission.class, id);
 	}
 
@@ -45,7 +45,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
+	public void delete(String id) throws NoSuchModelException {
 		Permission permission = getById(id);
 		if(permission == null){
 			throw new NoSuchModelException(Permission.class, id);
@@ -61,7 +61,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Permission> getByUserId(long userId) {
+	public List<Permission> getByUserId(String userId) {
 		Query query = entityManager.createQuery(HQL_SELECT_BY_USER);
 		query.setParameter("userId", userId);
 		return (List<Permission>)query.getResultList();
@@ -69,7 +69,7 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Permission> getByGroupId(long groupId) {
+	public List<Permission> getByGroupId(String groupId) {
 		Query query = entityManager.createQuery(HQL_SELECT_BY_GROUP);
 		query.setParameter("groupId", groupId);
 		return (List<Permission>)query.getResultList();

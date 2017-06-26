@@ -19,7 +19,7 @@ import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.model.Permission;
 import com.epam.cdp.userManagement.model.User;
 
-@Repository
+//@Repository
 public class UserRepositoryImpl implements UserRepository {
 
 	private String HQL_SELECT = "SELECT user FROM User user";
@@ -32,15 +32,15 @@ public class UserRepositoryImpl implements UserRepository {
 	@Autowired
 	private PermissionRepository permissionRepo;
 	
-	public long create(User user) {
-		user.setId(0);
+	public String create(User user) {
+		user.setId("0");
 		entityManager.persist(user);
 		entityManager.flush();
 		return user.getId();
 	}
 
 	@Override
-	public User getById(long id) {
+	public User getById(String id) {
 		return entityManager.find(User.class, id);
 	}
 
@@ -54,7 +54,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
+	public void delete(String id) throws NoSuchModelException {
 		User user = getById(id);
 		if(user == null) {
 			throw new NoSuchModelException(User.class, id);
@@ -70,9 +70,9 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void assignPermissions(long userId, long[] permissionIds) {
+	public void assignPermissions(String userId, String[] permissionIds) {
 		User user = getById(userId);
-		for (long id : permissionIds) {
+		for (String id : permissionIds) {
 			Permission permission = permissionRepo.getById(id);
 			user.getPermissionList().add(permission);
 		}
@@ -81,7 +81,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void assignGroup(long userId, long groupId) {
+	public void assignGroup(String userId, String groupId) {
 		User user = getById(userId);
 		Group group = groupRepository.getById(groupId);
 		user.getGroupList().add(group);
@@ -89,7 +89,7 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 
 	@Override
-	public void assignPermission(long userId, long permissionId) {
+	public void assignPermission(String userId, String permissionId) {
 		User user = getById(userId);
 		Permission permission = permissionRepo.getById(permissionId);
 		user.getPermissionList().add(permission);
@@ -98,7 +98,7 @@ public class UserRepositoryImpl implements UserRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getUsersByGroupId(long groupId) {
+	public List<User> getUsersByGroupId(String groupId) {
 		Query query = entityManager.createQuery(HQL_SELECT_BY_GROUP);
 		query.setParameter("groupId", groupId);
 		return (List<User>)query.getResultList();

@@ -31,19 +31,19 @@ public class AddressController {
 	
 	@RequestMapping(value="/addresses/{id}", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public Address getAddress(@PathVariable("id") long addressId){
+	public Address getAddress(@PathVariable("id") String addressId){
 		return service.getById(addressId);
 	}
 	
 	@RequestMapping(value="/addresses", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-    public long createUserAddress(@Valid @RequestBody Address newAddress) throws Exception {
+    public String createUserAddress(@Valid @RequestBody Address newAddress) throws Exception {
 		return service.create(newAddress);
 	}
 	
 	@RequestMapping(value="/addresses/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-    public Address updateAddress(@PathVariable("id") long id, @RequestBody Address newAddress) {
+    public Address updateAddress(@PathVariable("id") String id, @RequestBody Address newAddress) {
 		newAddress.setId(id);
 		return service.update(newAddress);
 	}

@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
@@ -16,9 +16,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table
-@Inheritance(strategy = InheritanceType.JOINED)
+import org.springframework.data.annotation.Id;
+
+//@Entity
+//@Table
+//@Inheritance(strategy = InheritanceType.JOINED)
 public class License implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,7 +28,7 @@ public class License implements Serializable {
 	@Id
 	@Column(name="license_id")
 	@GeneratedValue
-	protected long id;
+	protected String id;
 	@Column
 	protected String name;
 	
@@ -42,10 +44,10 @@ public class License implements Serializable {
 		this.name = name;
 	}
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

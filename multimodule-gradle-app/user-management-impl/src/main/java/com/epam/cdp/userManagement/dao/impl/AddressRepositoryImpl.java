@@ -6,67 +6,70 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+
 import com.epam.cdp.userManagement.dao.AddressRepository;
+import com.epam.cdp.userManagement.dao.mongo.AddressRepoMongo;
 import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Address;
 
-@Repository
+//@Repository
 public class AddressRepositoryImpl implements AddressRepository {
 
 	private String HQL_SELECT = "SELECT address FROM Address address";
 	private String HQL_SELECT_ID_BY_ADDRESS = "SELECT address.id FROM Address address WHERE address.city=:city AND address.street=:street AND address.house_number=:houseNumber AND address.flat_number=:flatNumber";
 
-	@PersistenceContext
-	private EntityManager entityManager;
+	@Autowired
+	public AddressRepoMongo addressrepo;
+
 
 	@Override
-	public long create(Address entity) {
-		entity.setId(0);
-		entityManager.persist(entity);
-		entityManager.flush();
-		return entity.getId();
+	public String create(Address entity) {
+		Address address = addressrepo.save(entity);
+		return address.getId();
 	}
 
 	@Override
-	public Address getById(long id) {
-		return entityManager.find(Address.class, id);
+	public Address getById(String string) {
+		return addressrepo.findOne(string);
+		//return entityManager.find(Address.class, string);
 	}
 
 	@Override
 	public Address update(Address entity) {
-		Address address = getById(entity.getId());
-		if (address == null) {
+		if (!addressrepo.exists(entity.getId())) {
 			return null;
 		}
-		return entityManager.merge(entity);
+		return addressrepo.save(entity);
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
-		Address address = getById(id);
-		if (address == null) {
+	public void delete(String id) throws NoSuchModelException {
+		if (!addressrepo.exists(id)) {
 			throw new NoSuchModelException(Address.class, id);
 		}
-		entityManager.remove(address);
+		addressrepo.delete(id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Address> getAll() {
-		return (List<Address>) entityManager.createQuery(HQL_SELECT).getResultList();
+		//return (List<Address>) entityManager.createQuery(HQL_SELECT).getResultList();
+		return addressrepo.findAll();
 	}
 
 	@Override
-	public long getIdByAddress(Address address) throws NoSuchModelException {
-		Query query = entityManager.createQuery(HQL_SELECT_ID_BY_ADDRESS);
+	public String getIdByAddress(Address address) throws NoSuchModelException {
+		/*Query query = entityManager.createQuery(HQL_SELECT_ID_BY_ADDRESS);
 		query.setParameter("city", address.getCity());
 		query.setParameter("street", address.getStreet());
 		query.setParameter("houseNumber", address.getHouseNumber());
 		query.setParameter("flatNumber", address.getFlatNumber());
-		return (long) query.getSingleResult();
+		return (long) query.getSingleResult();*/
+		
+		return address.getId();
 	}
 
 }

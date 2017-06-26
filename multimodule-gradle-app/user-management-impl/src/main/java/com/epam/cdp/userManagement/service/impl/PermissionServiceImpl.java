@@ -11,7 +11,7 @@ import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Permission;
 import com.epam.cdp.userManagement.service.IPermissionService;
 
-@Component
+//@Component
 public class PermissionServiceImpl implements IPermissionService{
 
 	@Autowired
@@ -23,28 +23,28 @@ public class PermissionServiceImpl implements IPermissionService{
 	}
 
 	@Override
-	public Permission getById(long permissionId) {
+	public Permission getById(String permissionId) {
 		return permissionRepo.getById(permissionId);
 	}
 
 	@Override
-	public long create(Permission permission) {
+	public String create(Permission permission) {
 		return permissionRepo.create(permission);
 	}
 
 	@Override
-	public void delete(long permissionId) throws NoSuchModelException {
+	public void delete(String permissionId) throws NoSuchModelException {
 		permissionRepo.delete(permissionId);
 	}
 
 	@Override
-	public Permission update(long id, Permission permission) {
+	public Permission update(String id, Permission permission) {
 		permission.setId(id);
 		return permissionRepo.update(permission);
 	}
 
 	@Override
-	public List<Permission> getByUserId(long userId) {
+	public List<Permission> getByUserId(String userId) {
 		return permissionRepo.getByUserId(userId);
 	}
 

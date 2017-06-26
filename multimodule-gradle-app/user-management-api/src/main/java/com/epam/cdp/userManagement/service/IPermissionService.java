@@ -9,13 +9,13 @@ public interface IPermissionService {
 
 	List<Permission> getAll();
 	
-	Permission  getById(long permissionId);
+	Permission  getById(String permissionId);
 	
-	long create(Permission permission);
+	String create(Permission permission);
 	
-	void delete(long permissionId) throws NoSuchModelException;
+	void delete(String permissionId) throws NoSuchModelException;
 	
-	Permission update(long id, Permission permission);
+	Permission update(String id, Permission permission);
 	
-	List<Permission> getByUserId(long userId);
+	List<Permission> getByUserId(String userId);
 }

@@ -9,10 +9,10 @@ import com.epam.cdp.userManagement.model.Address;
 
 public interface EntityRepository<T extends Serializable> {
 	
-	long create(T entiry);
-	T getById(long id);
+	String create(T entiry);
+	T getById(String id);
 	T update(T entity);
-	void delete(long id) throws NoSuchModelException;
+	void delete(String id) throws NoSuchModelException;
 	
 	List<T> getAll();
 

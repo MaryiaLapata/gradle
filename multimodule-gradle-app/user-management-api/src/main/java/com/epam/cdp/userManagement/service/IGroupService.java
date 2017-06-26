@@ -9,13 +9,13 @@ public interface IGroupService {
 
 	List<Group> getAll();
 	
-	Group getById(long groupId);
+	Group getById(String groupId);
 	
-	long create(Group newGroup);
+	String create(Group newGroup);
 
-	void delete(long id) throws NoSuchModelException;
+	void delete(String id) throws NoSuchModelException;
 	
-	Group update(long id, Group newGroup);
+	Group update(String id, Group newGroup);
 	
-	List<Group> getByUserId(long userId);
+	List<Group> getByUserId(String userId);
 }

@@ -18,7 +18,7 @@ import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.service.IGroupService;
 
-@RestController
+//@RestController
 public class GroupController {
 
 	@Autowired
@@ -32,25 +32,25 @@ public class GroupController {
 
 	@RequestMapping(value="/groups/{id}", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-    public Group getGroupDetails(@PathVariable("id") long id) {
+    public Group getGroupDetails(@PathVariable("id") String id) {
 		return groupService.getById(id);
 	}
 	
 	@RequestMapping(value="/groups", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-    public long createGroup(@Valid @RequestBody Group newGroup) {
+    public String createGroup(@Valid @RequestBody Group newGroup) {
 		return groupService.create(newGroup);
 	}
 	
 	@RequestMapping(value="/groups/{id}", method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteGroup(@PathVariable("id") long id) throws NoSuchModelException {
+    public void deleteGroup(@PathVariable("id") String id) throws NoSuchModelException {
 		groupService.delete(id);
 	}
 	
 	@RequestMapping(value="/groups/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-    public Group updateGroup(@PathVariable("id") long id, @Valid @RequestBody Group newGroup) {
+    public Group updateGroup(@PathVariable("id") String id, @Valid @RequestBody Group newGroup) {
 		return groupService.update(id, newGroup);
 	}
 }

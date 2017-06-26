@@ -8,9 +8,9 @@ public interface IAddressService {
 	
 	List<Address> getAll();
 	
-	Address getById(long addressId);
+	Address getById(String addressId);
 	
-	long create(Address address);
+	String create(Address address);
 	
 	Address update(Address address);
 

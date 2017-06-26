@@ -6,9 +6,9 @@ import com.epam.cdp.userManagement.model.User;
 
 public interface UserRepository extends LicenseRepository<User>{
 
-	void assignGroup(long userId, long groupId);
+	void assignGroup(String userId, String groupId);
 	
-	void assignPermission(long userId, long permissionId);
+	void assignPermission(String userId, String permissionId);
 	
-	List<User> getUsersByGroupId(long groupId);
+	List<User> getUsersByGroupId(String groupId);
 }

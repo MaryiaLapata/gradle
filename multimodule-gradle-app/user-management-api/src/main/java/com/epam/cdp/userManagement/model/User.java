@@ -22,13 +22,13 @@ import org.hibernate.validator.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-
-@Entity
-@Table
-@PrimaryKeyJoinColumn(name = "user_id")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id", scope = User.class)
+//
+//@Entity
+//@Table
+//@PrimaryKeyJoinColumn(name = "user_id")
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id", scope = User.class)
 public class User extends License implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -69,7 +69,7 @@ public class User extends License implements Serializable {
 		this.address = address;
 	};
 
-	public User(long id, String firstName, String lastName, String email, String phone, Address address) {
+	public User(String id, String firstName, String lastName, String email, String phone, Address address) {
 		super();
 		this.id = id;
 		this.firstName = firstName;

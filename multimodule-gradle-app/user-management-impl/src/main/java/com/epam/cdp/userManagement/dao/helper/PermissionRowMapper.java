@@ -12,7 +12,7 @@ public class PermissionRowMapper implements RowMapper<Permission> {
 	@Override
 	public Permission mapRow(ResultSet rs, int rowNum) throws SQLException {
 		Permission permission = new Permission();
-		permission.setId(rs.getInt("permission_id"));
+		permission.setId(rs.getString("permission_id"));
 		permission.setObject(rs.getString("object"));
 		permission.setActionType(rs.getString("action_type"));
 		return permission;

@@ -11,7 +11,7 @@ import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.service.IGroupService;
 
-@Component
+//@Component
 public class GroupServiceImpl implements IGroupService{
 	
 	@Autowired
@@ -25,30 +25,30 @@ public class GroupServiceImpl implements IGroupService{
 	}
 
 	@Override
-	public Group getById(long groupId) {
+	public Group getById(String groupId) {
 		Group group = groupRepository.getById(groupId);
 		//group.setUserList(userRepo.getUsersByGroupId(groupId));
 		return group;
 	}
 
 	@Override
-	public long create(Group newGroup) {
+	public String create(Group newGroup) {
 		return groupRepository.create(newGroup);
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
+	public void delete(String id) throws NoSuchModelException {
 		groupRepository.delete(id);
 	}
 
 	@Override
-	public Group update(long id, Group newGroup) {
+	public Group update(String id, Group newGroup) {
 		newGroup.setId(id);
 		return groupRepository.update(newGroup);
 	}
 
 	@Override
-	public List<Group> getByUserId(long userId) {
+	public List<Group> getByUserId(String userId) {
 		
 		return groupRepository.getByUserId(userId);
 	}

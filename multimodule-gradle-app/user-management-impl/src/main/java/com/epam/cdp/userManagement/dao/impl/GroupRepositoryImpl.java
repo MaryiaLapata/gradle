@@ -15,7 +15,7 @@ import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Group;
 import com.epam.cdp.userManagement.model.Permission;
 
-@Repository
+//@Repository
 public class GroupRepositoryImpl implements GroupRepository {
 
 	private String HQL_SELECT_ALL = "SELECT group FROM Group group";
@@ -28,15 +28,15 @@ public class GroupRepositoryImpl implements GroupRepository {
 	private PermissionRepository permissionRepo;
 	
 	@Override
-	public long create(Group entity) {
-		entity.setId(0);
+	public String create(Group entity) {
+		entity.setId("0");
 		entityManager.persist(entity);
 		entityManager.flush();
 		return entity.getId();
 	}
 
 	@Override
-	public Group getById(long id) {
+	public Group getById(String id) {
 		return entityManager.find(Group.class, id);
 	}
 
@@ -50,7 +50,7 @@ public class GroupRepositoryImpl implements GroupRepository {
 	}
 
 	@Override
-	public void delete(long id) throws NoSuchModelException {
+	public void delete(String id) throws NoSuchModelException {
 		Group group = getById(id);
 		if(group == null) {
 			throw new NoSuchModelException(Group.class, id);
@@ -65,9 +65,9 @@ public class GroupRepositoryImpl implements GroupRepository {
 	}
 
 	@Override
-	public void addUsers(long groupId, List<Long> userIds) {
+	public void addUsers(String groupId, List<String> userIds) {
 		Group group = getById(groupId);
-		for(Long id : userIds) {
+		for(String id : userIds) {
 			//User user = userRepo.getById(id);
 			//group.getUserList().add(user);
 		}
@@ -75,9 +75,9 @@ public class GroupRepositoryImpl implements GroupRepository {
 	}
 
 	@Override
-	public void assignPermissions(long groupId, long[] permissionIds) {
+	public void assignPermissions(String groupId, String[] permissionIds) {
 		Group group = getById(groupId);
-		for(long id : permissionIds) {
+		for(String id : permissionIds) {
 			Permission permision = permissionRepo.getById(id);
 			group.getPermissionList().add(permision);
 		}
@@ -86,7 +86,7 @@ public class GroupRepositoryImpl implements GroupRepository {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Group> getByUserId(long userId) {
+	public List<Group> getByUserId(String userId) {
 		Query query = entityManager.createQuery(HQL_SELECT_BY_USER);
 		query.setParameter("userId", userId);
 		return (List<Group>)query.getResultList();

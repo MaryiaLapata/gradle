@@ -18,7 +18,7 @@ import com.epam.cdp.userManagement.exception.NoSuchModelException;
 import com.epam.cdp.userManagement.model.Permission;
 import com.epam.cdp.userManagement.service.IPermissionService;
 
-@RestController
+//@RestController
 public class PermissionController {
 	
 	@Autowired
@@ -32,25 +32,25 @@ public class PermissionController {
 	
 	@RequestMapping(value="/permissions/{id}", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public Permission getPermission(@PathVariable("id") long permissionId){
+	public Permission getPermission(@PathVariable("id") String permissionId){
 		return service.getById(permissionId);
 	}
 	
 	@RequestMapping(value="/permissions", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public long createPermission(@Valid @RequestBody Permission permission) {
+	public String createPermission(@Valid @RequestBody Permission permission) {
 		return service.create(permission);
 	}
 	
 	@RequestMapping(value="/permissions/{id}", method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePermission(@PathVariable("id") long id) throws NoSuchModelException {
+    public void deletePermission(@PathVariable("id") String id) throws NoSuchModelException {
 		service.delete(id);
 	}
 	
 	@RequestMapping(value="/permissions/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-    public Permission updateUser(@PathVariable("id") long id, @RequestBody Permission permission) {
+    public Permission updateUser(@PathVariable("id") String id, @RequestBody Permission permission) {
 		permission.setId(id);
 		return service.update(id, permission);
 	}

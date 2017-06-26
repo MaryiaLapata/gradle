@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.epam.cdp.userManagement.dao.AddressRepository;
+import com.epam.cdp.userManagement.dao.mongo.AddressRepoMongo;
 import com.epam.cdp.userManagement.model.Address;
 import com.epam.cdp.userManagement.service.IAddressService;
 
@@ -15,26 +16,30 @@ import com.epam.cdp.userManagement.service.IAddressService;
 public class AddressServiceImpl implements IAddressService{
 	
 	@Autowired
-	private AddressRepository addressRepo;
+	public AddressRepoMongo addressrepo;
 
 	@Override
 	public List<Address> getAll() {
-		return addressRepo.getAll();
+		return addressrepo.findAll();
 	}
 
 	@Override
-	public Address getById(long addressId) {
-		return addressRepo.getById(addressId);
+	public Address getById(String addressId) {
+		return addressrepo.findOne(addressId);
 	}
 
 	@Override
-	public long create(Address address) {
-		return addressRepo.create(address);
+	public String create(Address address) {
+		Address savedAddress = addressrepo.save(address);
+		return savedAddress.getId();
 	}
 
 	@Override
 	public Address update(Address address) {
-		return addressRepo.update(address);
+		if (!addressrepo.exists(address.getId())) {
+			return null;
+		}
+		return addressrepo.save(address);
 	}
 	
 	

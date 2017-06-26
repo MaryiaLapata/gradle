@@ -24,7 +24,7 @@ import com.epam.cdp.userManagement.service.IPermissionService;
 import com.epam.cdp.userManagement.service.IUserService;
 
 
-@RestController
+//@RestController
 public class UserController {
 	
 	@Autowired
@@ -47,50 +47,50 @@ public class UserController {
 
 	@RequestMapping(value="/users/{id}", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-    public User getUserDetails(@PathVariable("id") long id) throws NoSuchModelException {
+    public User getUserDetails(@PathVariable("id") String id) throws NoSuchModelException {
 		return userService.getById(id);
 	}
 	
 	@RequestMapping(value="/users/{id}", method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable("id") long id) throws NoSuchModelException {
+    public void deleteUser(@PathVariable("id") String id) throws NoSuchModelException {
 		userService.delete(id);
 	}
 
 	@RequestMapping(value="/users", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-    public long createUser(@Valid @RequestBody User newUser) throws Exception {
+    public String createUser(@Valid @RequestBody User newUser) throws Exception {
 		return userService.create(newUser);
 	}
 	
 	@RequestMapping(value="/users/{id}", method=RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-    public User updateUser(@PathVariable("id") long id, @RequestBody User newUser) {
+    public User updateUser(@PathVariable("id") String id, @RequestBody User newUser) {
 		newUser.setId(id);
 		return userService.update(id, newUser);
 	}
 	
 	@RequestMapping(value="/users/{id}/groups", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public List<Group> getGroupsByUserId(@PathVariable("id") long userId) {
+	public List<Group> getGroupsByUserId(@PathVariable("id") String userId) {
 		return groupService.getByUserId(userId);
 	}
 	
 	@RequestMapping(value="/users/{id}/groups", params="action=assign", method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void assignGroup(@PathVariable("id") long userId, @RequestParam("groupId") long groupId) {
+	public void assignGroup(@PathVariable("id") String userId, @RequestParam("groupId") String groupId) {
 		userService.assignGroup(userId, groupId);
 	}
 	
 	@RequestMapping(value="/users/{id}/permissions", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	public List<Permission> getPermissionsByUserId(@PathVariable("id") long userId) {
+	public List<Permission> getPermissionsByUserId(@PathVariable("id") String userId) {
 		return permissionService.getByUserId(userId);
 	}
 	
 	@RequestMapping(value="/users/{id}/permissions", params="action=assign", method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void assignPermission(@PathVariable("id") long userId, @RequestParam("permissionId") long permissionId) {
+	public void assignPermission(@PathVariable("id") String userId, @RequestParam("permissionId") String permissionId) {
 		userService.assignPermission(userId, permissionId);
 	}
 }

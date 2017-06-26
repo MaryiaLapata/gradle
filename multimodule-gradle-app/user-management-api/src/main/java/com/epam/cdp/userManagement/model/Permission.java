@@ -7,15 +7,16 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
 
-@Entity
-@Table
+//@Entity
+//@Table
 public class Permission implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +24,7 @@ public class Permission implements Serializable {
 	@Id
 	@Column(name="permission_id")
 	@GeneratedValue
-	private long id;
+	private String id;
 	@NotEmpty
 	@Column
 	private String object;
@@ -37,16 +38,16 @@ public class Permission implements Serializable {
 	
 	public Permission(){}
 	
-	public Permission(long id, String object, String actionType) {
+	public Permission(String id, String object, String actionType) {
 		this.id = id;
 		this.object = object;
 		this.actionType = actionType;
 	}
 	
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getObject() {
