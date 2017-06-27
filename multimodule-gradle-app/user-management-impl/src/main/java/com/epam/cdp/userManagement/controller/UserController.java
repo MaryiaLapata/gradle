@@ -24,15 +24,15 @@ import com.epam.cdp.userManagement.service.IPermissionService;
 import com.epam.cdp.userManagement.service.IUserService;
 
 
-//@RestController
+@RestController
 public class UserController {
 	
 	@Autowired
 	private IUserService userService;
-	@Autowired
-	private IGroupService groupService;
-	@Autowired
-	private IPermissionService permissionService;
+//	@Autowired
+//	private IGroupService groupService;
+//	@Autowired
+//	private IPermissionService permissionService;
 
 	@RequestMapping("/")
     public String index() {
@@ -70,11 +70,11 @@ public class UserController {
 		return userService.update(id, newUser);
 	}
 	
-	@RequestMapping(value="/users/{id}/groups", method=RequestMethod.GET)
+	/*@RequestMapping(value="/users/{id}/groups", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public List<Group> getGroupsByUserId(@PathVariable("id") String userId) {
 		return groupService.getByUserId(userId);
-	}
+	}*/
 	
 	@RequestMapping(value="/users/{id}/groups", params="action=assign", method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -82,11 +82,11 @@ public class UserController {
 		userService.assignGroup(userId, groupId);
 	}
 	
-	@RequestMapping(value="/users/{id}/permissions", method=RequestMethod.GET)
+	/*@RequestMapping(value="/users/{id}/permissions", method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public List<Permission> getPermissionsByUserId(@PathVariable("id") String userId) {
 		return permissionService.getByUserId(userId);
-	}
+	}*/
 	
 	@RequestMapping(value="/users/{id}/permissions", params="action=assign", method=RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)

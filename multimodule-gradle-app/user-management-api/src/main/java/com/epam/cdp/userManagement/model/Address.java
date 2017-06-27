@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 //@Entity
 //@Table
-@Document
+//@Document
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 4986561174950596745L;

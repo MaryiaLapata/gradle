@@ -17,6 +17,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.epam.cdp.userManagement.dao.mongo.AddressRepoMongo;
+import com.epam.cdp.userManagement.dao.mongo.UserRepoMango;
 import com.epam.cdp.userManagement.model.Address;
 import com.epam.cdp.userManagement.model.User;
 
@@ -29,6 +30,8 @@ public class UserManagementApp implements CommandLineRunner{
 	
 	@Autowired
 	public AddressRepoMongo addressrepo;
+	@Autowired
+	private UserRepoMango userRepo;
 
 	
 	public UserManagementApp() {
@@ -47,6 +50,7 @@ public class UserManagementApp implements CommandLineRunner{
 //	addressrepo.deleteAll();
 		//addressrepo.save(new Address("1", "NY", "Baker street", 25, 6));
 		//addressrepo.save(new Address("2", "NY", "Checken street", 23, 2));
+		userRepo.save(new User("Michael", "Martin", "MM@kronos.com", "123456789",  new Address("3", "NY", "Baker street", 21, 9)));
 		
 		System.out.println("Customers found with findAll():");
 		System.out.println("-------------------------------");
